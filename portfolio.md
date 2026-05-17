@@ -89,6 +89,16 @@
 * **수행 방식**:
   - [tdd-component-workflow.md](./skills/tdd_workflow/artifacts/tdd-component-workflow.md) 규칙을 신설하여, AI가 코드를 쓰기 전에 **분석/설계(Red) -> 테스트 케이스 작성(Red) -> 빈 뼈대 테스트 실패 확인 -> 비즈니스 로직 작성(Green) -> 자가 치유(Self-healing) -> 시각적 검증** 단계를 밟도록 강제했습니다.
   - 랩 타임 목록을 관리하는 [lit-lap-list.ts](./components/lit-lap-list/lit-lap-list.ts) 개발에 적용함과 동시에, Phase 1에서 작성했던 기존 [lit-stopwatch.ts](./components/lit-stopwatch/lit-stopwatch.ts) 코드 역시 이 TDD 규칙에 맞춰 단위 테스트를 확보하고 견고하게 리팩토링(Refactoring)하는 과정을 병행했습니다.
+
+> 📋 **[tdd-component-workflow.md](./skills/tdd_workflow/artifacts/tdd-component-workflow.md) 규칙 핵심 내용**
+>
+> | 단계 | 행동 규칙 |
+> | :--- | :--- |
+> | **Step 1: 분석/설계** | 코드를 즉시 작성하지 않고, 컴포넌트 State/Properties/Events를 먼저 정의하고 전체 계획을 수립한 뒤 검토를 완료합니다. |
+> | **Step 2: Red Phase (테스트 우선)** | `@open-wc/testing`의 `fixture`, `aTimeout`, `oneEvent` 등을 활용하여 정상 경로(Happy path)와 에지 케이스를 모두 커버하는 테스트 파일을 먼저 작성합니다. |
+> | **Step 3: Green Phase (자가 치유 루프)** | 빈 뼈대로 의도된 실패(Red)를 확인한 뒤, 터미널 오류 로그를 스스로 파싱하여 코드를 수정하고 모든 테스트가 통과할 때까지 루프를 반복합니다. |
+> | **Step 4: 시각적 검증** | 테스트 통과 후 `index.html`로 실제 브라우저 렌더링을 확인하고 개발 완료 내역을 기록합니다. |
+> | **리팩토링 제약** | 구조적 변경(컴포넌트 분리, API 변경 등)은 사전 전체 계획 수립 및 검토 승인 없이 임의로 진행할 수 없습니다. |
 * **자가 치유(Self-healing)의 발현**:
   - 테스트 러너인 `@web/test-runner`가 비동기 타이머 상태 검증 시 환경 차이로 인해 실패(Red) 로그를 출력했습니다.
   - 자동화 시스템은 개발자의 개입 없이, 실패한 터미널의 에러 추적(StackTrace) 로그를 파싱하여 `requestAnimationFrame` 타이밍 문제임을 스스로 식별했습니다. 이후 `@open-wc/testing` 패키지의 `aTimeout`과 `elementUpdated`를 활용해 비동기 상태 동기화를 보장하도록 [lit-lap-list.test.ts](./components/lit-lap-list/tests/lit-lap-list.test.ts) 코드를 자율 수정하여 모든 테스트를 성공(Green)시켰습니다.
@@ -100,6 +110,23 @@
   - **TypeScript & Class 규칙**: 모든 프로퍼티, 내부 상태(`@state`), 메서드 파라미터 및 반환값에 대해 엄격한 타입 정의를 요구했습니다. 부모 클래스의 라이프사이클을 해치지 않도록 `super.connectedCallback()` 등 필수 호출을 제약조건으로 지정했습니다.
   - **웹 접근성(A11y)**: 스크린 리더 발화를 돕는 시맨틱 마크업과 ARIA 속성 활용, `tabindex`를 통한 키보드 포커스 관리, `:focus-visible`을 통한 포커스 시각 피드백을 규율화했습니다.
   - **문서화**: JSDoc 표준 블록 주석을 필수로 기술하여 API 명세가 자동 빌드되도록 강제했습니다.
+
+> 📋 **[custom-element-coding-rules.md](./skills/custom_element_rules/artifacts/custom-element-coding-rules.md) 규칙 핵심 내용**
+>
+> **1. TypeScript & Class 규칙**
+> - 모든 커스텀 엘리먼트는 `LitElement`를 상속하는 `class` 형태로 작성하며, `@customElement` / `@property` / `@state` 데코레이터를 필수 활용합니다.
+> - 모든 프로퍼티·상태·메서드의 파라미터/반환값에 TypeScript 타입을 명시적으로 선언합니다.
+> - `connectedCallback` 등 라이프사이클 오버라이딩 시 반드시 `super.connectedCallback()`을 먼저 호출합니다.
+> - 외부에서 접근할 필요 없는 내부 상태·메서드는 `private` / `protected`로 캡슐화합니다.
+>
+> **2. 웹 접근성(a11y) 규칙**
+> - 가능한 한 시맨틱 HTML 태그(`<button>`, `<nav>`)를 우선 사용하며, 커스텀 UI에는 `role` 및 `aria-label` / `aria-live` 등 ARIA 속성을 명시합니다.
+> - `Tab` 키 기반 포커스 이동을 보장하고, 동작 요소는 `Enter` / `Space` 키 이벤트(`keydown`)에도 반응하도록 구현합니다.
+> - `:focus-visible`로 포커스 시각 피드백을 제공하고, WCAG 명도 대비 기준(최소 4.5:1)을 준수합니다.
+>
+> **3. TypeDoc 문서화 규칙**
+> - 클래스 상단에 `@element`, `@fires`, `@example` 태그를 포함한 JSDoc 블록 주석을 필수 작성합니다.
+> - 모든 `@property` / `@state` 필드와 메서드에 목적·기본값·허용값을 `@param` / `@returns` 태그로 기술합니다.
 * **검증 결과**:
   - TDD 워크플로우를 통해 `@open-wc/testing` 내장 접근성 진단 도구를 구동했습니다.
   - `await expect(el).to.be.accessible()` 단 한 줄의 단언(Assertion)을 만족하기 위해, AI는 컴포넌트 구현 시 `role="status"` 및 키보드 작동 핸들러(`keydown`)를 필수로 설계에 반영해야 했으며, 이 역시 무결하게 통과했습니다.
@@ -112,6 +139,30 @@
   - **표준 CSS 모듈 웹 기술 적용**: TC39 표준인 CSS Modules 가입 기법(`import styles from './[name].css' with { type: 'css' }`)을 채택했습니다. TypeScript가 CSS 모듈을 모르면 컴파일 에러를 뱉으므로, [declarations.d.ts](./declarations.d.ts)에 CSS 모듈 정의를 수립하고, 빌드 및 테스트 환경에서 외부 CSS 파일을 복사하는 자동화 스크립트([copy-css.js](./scripts/copy-css.js))를 통합했습니다.
   - **구조적 마이그레이션 규칙 (Structural Refactoring Pipeline)**: AI가 임의로 전역 구조를 변경하지 않도록 제약했습니다. 구조 변경의 필요성과 영향도를 분석한 전체 계획을 사전에 명확히 수립하고, 계획 검증 후 자율 피드백 루프(Self-healing)를 통해 구조적 마이그레이션을 안정적으로 마칠 수 있도록 협업 프로세스를 수립했습니다.
   - 이 규칙을 통해 이전의 `lit-stopwatch` 컴포넌트를 표준 격리 구조([components/lit-stopwatch/](./components/lit-stopwatch/)) 폴더 하위에 로직/CSS/테스트 격리)로 성공적으로 리팩토링 및 마이그레이션 완료했습니다.
+
+> 📋 **[custom-element-scaffold-rule.md](./skills/custom_element_scaffold/artifacts/custom-element-scaffold-rule.md) 규칙 핵심 내용**
+>
+> **1. 디렉토리 구조 표준**
+> ```
+> components/
+> └── [component-name]/
+>     ├── [component-name].ts       # 컴포넌트 로직
+>     ├── [component-name].css      # 독립 스타일
+>     └── tests/
+>         └── [component-name].test.ts  # 격리된 테스트
+> ```
+> 새 컴포넌트는 반드시 `components/` 하위의 전용 격리 폴더에 배치하며, 빌드 산출물은 `dist/`로만 출력합니다(`tsconfig.json` `outDir: "./dist"`).
+>
+> **2. CSS 모듈 연동**
+> - 외부 `.css` 파일은 TC39 표준인 `import styles from './name.css' with { type: 'css' }` 구문으로 임포트합니다.
+> - TypeScript가 CSS를 인식하도록 `declarations.d.ts`에 `declare module '*.css'` 선언을 추가합니다.
+> - 빌드·테스트 환경에서 CSS가 `dist/`로 복사되도록 자동화 스크립트(`copy-css.js`)를 연동합니다.
+>
+> **3. 구조적 마이그레이션 4단계 파이프라인**
+> 1. **사전 승인**: 구조 변경 이유와 영향 범위를 담은 전체 계획을 먼저 수립하고 검토를 완료합니다.
+> 2. **Red Phase**: 변경된 구조에 맞춰 테스트 코드를 먼저 수정 또는 신규 작성하여 실패(Red)를 확인합니다.
+> 3. **Green Phase**: 실제 코드를 리팩토링하고 자가 치유 루프로 모든 테스트를 통과시킵니다.
+> 4. **결과 검증**: 완료 후 변경 내역과 검증 결과를 문서화하여 보고합니다.
 
 ### 5️⃣ Phase 5: High-Performance DevOps Parallel CI Pipeline
 * **목적**: 코드 수정 후 GitHub Pull Request(PR)가 요청되었을 때, 빌드·린트·테스트가 완벽하게 검증되도록 자동화하며, 팀 규모 성장에 맞춰 피드백 속도를 최적화합니다.
