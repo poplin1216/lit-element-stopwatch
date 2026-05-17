@@ -1,6 +1,7 @@
-import { LitElement, html, css, TemplateResult } from 'lit';
+import { LitElement, html, TemplateResult } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
-import './lit-lap-list.js';
+import styles from './lit-stopwatch.css' with { type: 'css' };
+import '../lit-lap-list/lit-lap-list.js';
 
 /**
  * 스톱워치 기능을 제공하는 커스텀 엘리먼트입니다.
@@ -24,29 +25,8 @@ import './lit-lap-list.js';
  */
 @customElement('lit-stopwatch')
 export class LitStopwatch extends LitElement {
-  static styles = css`
-    :host {
-      display: inline-block;
-      font-family: monospace;
-      text-align: center;
-      border: 1px solid #ccc;
-      padding: 1rem;
-      border-radius: 8px;
-    }
-    .time-display {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-    button {
-      padding: 0.5rem 1rem;
-      font-size: 1rem;
-      cursor: pointer;
-    }
-    button:focus-visible {
-      outline: 2px solid #005fcc;
-      outline-offset: 2px;
-    }
-  `;
+  // 브라우저 표준 Constructable Stylesheets 기법을 이용한 외부 CSS 적용
+  static styles = [styles];
 
   /** 스톱워치의 동작 여부 상태 */
   @state() isRunning = false;
