@@ -1,0 +1,8 @@
+{
+  "title": "Custom Element Standard Rules",
+  "summary": "Lit 기반 Custom Element 작성 시 반드시 준수해야 하는 TypeScript 상속 구조 및 웹 접근성(스크린 리더 발화, 키보드 포커스, 고대비 모드) 가이드라인입니다.",
+  "createdAt": "2026-05-17T10:55:00Z",
+  "references": [
+    "d:\\source\\lit-element-stopwatch\\skills\\custom_element_rules\\artifacts\\custom-element-coding-rules.md"
+  ]
+}

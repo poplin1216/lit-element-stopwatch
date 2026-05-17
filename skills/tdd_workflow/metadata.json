@@ -1,0 +1,8 @@
+{
+  "title": "TDD Component Workflow",
+  "summary": "Lit 기반 웹 컴포넌트 개발을 위한 TDD 워크플로우 지침입니다. 에이전트가 컴포넌트를 설계하고, TDD 테스트(Red)를 먼저 작성한 뒤, 테스트가 통과할 때까지 자가 치유(Green)하는 루프를 강제합니다. 작업 완료 시 walkthrough 문서 작성 및 시각적 데모를 수행합니다.",
+  "createdAt": "2026-05-17T01:39:00Z",
+  "references": [
+    "d:\\source\\lit-element-stopwatch\\skills\\tdd_workflow\\artifacts\\tdd-component-workflow.md"
+  ]
+}

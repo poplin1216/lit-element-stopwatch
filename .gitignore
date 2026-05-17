@@ -1,0 +1,10 @@
+node_modules
+dist
+test-results.xml
+
+# Compiled TS output
+*.js
+*.js.map
+*.d.ts
+# Exception: keep our ESM test runner configuration
+!web-test-runner.config.mjs

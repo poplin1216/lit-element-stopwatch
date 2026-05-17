@@ -1,0 +1,8 @@
+{
+  "title": "Custom Element Scaffold Rule",
+  "summary": "새로운 Lit 웹 컴포넌트(Custom Element) 개발 시, 파일 격리 구조(components/하위 디렉토리) 및 외부 CSS 분리 가이드라인을 강제하고 엄격한 TypeScript 타입 지정과 JSDoc 표준을 내포하는 스캐폴드(Scaffold) 템플릿 규칙입니다.",
+  "createdAt": "2026-05-17T11:27:00Z",
+  "references": [
+    "d:\\source\\lit-element-stopwatch\\skills\\custom_element_scaffold\\artifacts\\custom-element-scaffold-rule.md"
+  ]
+}
