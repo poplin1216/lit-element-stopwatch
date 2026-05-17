@@ -1,6 +1,6 @@
 import { html, fixture, expect } from '@open-wc/testing';
-import { LitLapList } from './lit-lap-list.js';
-import './lit-lap-list.js';
+import { LitLapList } from '../lit-lap-list.js';
+import '../lit-lap-list.js';
 
 describe('LitLapList', () => {
   it('초기 상태에서는 랩 리스트가 비어있어야 한다', async () => {

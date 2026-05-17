@@ -1,0 +1,27 @@
+/* 컴포넌트 호스트 엘리먼트 스타일 정의 */
+:host {
+  display: inline-block;
+  font-family: monospace;
+  text-align: center;
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.time-display {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* 웹 접근성 (a11y) 보장을 위한 공통 키보드 포커스 스타일 */
+button:focus-visible,
+:focus-visible {
+  outline: 2px solid #005fcc;
+  outline-offset: 2px;
+}

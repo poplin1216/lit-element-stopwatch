@@ -1,5 +1,6 @@
-import { LitElement, html, css, TemplateResult } from 'lit';
+import { LitElement, html, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import styles from './lit-lap-list.css' with { type: 'css' };
 
 /**
  * 랩 타임 목록을 렌더링하는 커스텀 엘리먼트입니다.
@@ -13,28 +14,8 @@ import { customElement, property } from 'lit/decorators.js';
  */
 @customElement('lit-lap-list')
 export class LitLapList extends LitElement {
-  static styles = css`
-    :host {
-      display: block;
-      margin-top: 1rem;
-      font-family: monospace;
-    }
-    ul {
-      list-style-type: none;
-      padding: 0;
-      margin: 0;
-    }
-    .lap-item {
-      display: flex;
-      justify-content: space-between;
-      padding: 0.5rem;
-      border-bottom: 1px solid #eee;
-    }
-    :focus-visible {
-      outline: 2px solid #005fcc;
-      outline-offset: 2px;
-    }
-  `;
+  // 브라우저 표준 Constructable Stylesheets 기법을 이용한 외부 CSS 적용
+  static styles = [styles];
 
   /**
    * 기록된 랩 타임 배열 (단위: 밀리초)

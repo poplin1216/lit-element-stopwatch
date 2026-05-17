@@ -6,5 +6,8 @@ test-results.xml
 *.js
 *.js.map
 *.d.ts
-# Exception: keep our ESM test runner configuration
+# Exception: keep our ESM test runner configuration and config scripts
 !web-test-runner.config.mjs
+!declarations.d.ts
+!vite.config.js
+!scripts/copy-css.js

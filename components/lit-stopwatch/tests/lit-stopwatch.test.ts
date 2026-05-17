@@ -1,6 +1,6 @@
 import { html, fixture, expect, elementUpdated, oneEvent, aTimeout } from '@open-wc/testing';
-import { LitStopwatch } from './lit-stopwatch.js';
-import './lit-stopwatch.js';
+import { LitStopwatch } from '../lit-stopwatch.js';
+import '../lit-stopwatch.js';
 
 describe('LitStopwatch', () => {
   it('초기 상태에서는 00:00.00을 표시하고 실행 중이 아니어야 한다', async () => {
@@ -57,8 +57,7 @@ describe('LitStopwatch', () => {
     el.stop();
     await elementUpdated(el);
     
-    // 강제로 laps에 데이터 넣음
-    (el as any).laps = [1000];
+    el.laps = [1000];
     
     const resetBtn = el.shadowRoot!.querySelector('.lap-reset-btn') as HTMLButtonElement;
     setTimeout(() => resetBtn.click());
